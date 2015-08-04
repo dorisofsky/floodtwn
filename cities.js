@@ -42,65 +42,65 @@ function drawTaiwan(){
 
   //Start of Choropleth drawing
 
-  function ready(error, map, data) {
-   var dataById = {};
-   var nameById = {};
+  function ready(error, town, data) {
+    var dataById = {};
+    var nameById = {};
 
-   data.forEach(function(d) {
-    dataById[d.Town_ID] = +d.flood;
-    nameById[d.Town_ID] = d.T_Name;
-  });
+    data.forEach(function(d) {
+      dataById[d.Town_ID] = +d.flood;
+      nameById[d.Town_ID] = d.T_Name;
+    });
 
-  //Drawing Choropleth
+    //Drawing Choropleth
 
-  svg.append("g")
-  .attr("class", "town")
-  .selectAll("path")
-  .data(topojson.object(town, town.objects.TWN_TOWN_v2).geometries)
-  //.data(topojson.feature(map, map.objects.russia).features) <-- in case topojson.v1.js
-  .enter().append("path")
-  .attr("d", path)
-  .style("fill", function(d) {
-    return color(dataById[d.properties.Town_ID]); 
-  })
-  .style("opacity", 0.8)
+    svg.append("g")
+    .attr("class", "town")
+    .selectAll("path")
+    .data(topojson.object(town, town.objects.TWN_TOWN_v2).geometries)
+    //.data(topojson.feature(map, map.objects.russia).features) <-- in case topojson.v1.js
+    .enter().append("path")
+    .attr("d", path)
+    .style("fill", function(d) {
+      return color(dataById[d.properties.Town_ID]); 
+    })
+    .style("opacity", 0.8)
 
-  //Adding mouseevents
-  .on("mouseover", function(d) {
-    d3.select(this).transition().duration(300).style("opacity", 1);
-    div.transition().duration(300)
-    .style("opacity", 1)
-    div.text(nameById[d.properties.Town_ID] + " : " + dataById[d.properties.Town_ID])
-    .style("left", (d3.event.pageX) + "px")
-    .style("top", (d3.event.pageY -30) + "px");
-  })
-  .on("mouseout", function() {
-    d3.select(this)
-    .transition().duration(300)
-    .style("opacity", 0.8);
-    div.transition().duration(300)
-    .style("opacity", 0);
-  })
-  
-   // Adding cities on the map
+    //Adding mouseevents
+    .on("mouseover", function(d) {
+      d3.select(this).transition().duration(300).style("opacity", 1);
+      div.transition().duration(300)
+      .style("opacity", 1)
+      div.text(nameById[d.properties.Town_ID] + " : " + dataById[d.properties.Town_ID])
+      .style("left", (d3.event.pageX) + "px")
+      .style("top", (d3.event.pageY -30) + "px");
+    })
+    .on("mouseout", function() {
+      d3.select(this)
+      .transition().duration(300)
+      .style("opacity", 0.8);
+      div.transition().duration(300)
+      .style("opacity", 0);
+    })
 
-  // d3.tsv("cities.tsv", function(error, data) {
-  //   var city = svg.selectAll("g.city")
-  //   .data(data)
-  //   .enter()
-  //   .append("g")
-  //   .attr("class", "city")
-  //   .attr("transform", function(d) { return "translate(" + projection([d.lon, d.lat]) + ")"; });
+    // Adding cities on the map
 
-  //   city.append("circle")
-  //   .attr("r", 3)
-  //   .style("fill", "lime")
-  //   .style("opacity", 0.75);
+    // d3.tsv("cities.tsv", function(error, data) {
+    //   var city = svg.selectAll("g.city")
+    //   .data(data)
+    //   .enter()
+    //   .append("g")
+    //   .attr("class", "city")
+    //   .attr("transform", function(d) { return "translate(" + projection([d.lon, d.lat]) + ")"; });
 
-  //   city.append("text")
-  //   .attr("x", 5)
-  //   .text(function(d) { return d.City; });
-  // });
+    //   city.append("circle")
+    //   .attr("r", 3)
+    //   .style("fill", "lime")
+    //   .style("opacity", 0.75);
+
+    //   city.append("text")
+    //   .attr("x", 5)
+    //   .text(function(d) { return d.City; });
+    // });
   
   }; // <-- End of Choropleth drawing
  
