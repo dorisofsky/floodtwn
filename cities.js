@@ -26,11 +26,9 @@ function drawTaiwan(){
   .attr("height", height)
   .style("margin", "10px auto");
 
-  var projection = d3.geo.albers()
-  .rotate([-105, 0])
-  .center([-10, 65])
-  .parallels([52, 64])
-  .scale(700)
+  var projection = d3.geo.mercator()
+  .center([121,24])
+  .scale(8000)
   .translate([width / 2, height / 2]);
 
   var path = d3.geo.path().projection(projection);
@@ -38,32 +36,32 @@ function drawTaiwan(){
   //Reading map file and data
 
   queue()
-  .defer(d3.json, "russia_1e-7sr.json")
-  .defer(d3.csv, "cities.csv")
+  .defer(d3.json, "TWN_TOWN_v2_topo3.json")
+  .defer(d3.csv, "disaster.csv")
   .await(ready);
 
   //Start of Choropleth drawing
 
   function ready(error, map, data) {
-   var rateById = {};
+   var dataById = {};
    var nameById = {};
 
    data.forEach(function(d) {
-    rateById[d.RegionCode] = +d.Deaths;
-    nameById[d.RegionCode] = d.RegionName;
+    dataById[d.Town_ID] = +d.flood;
+    nameById[d.Town_ID] = d.T_Name;
   });
 
   //Drawing Choropleth
 
   svg.append("g")
-  .attr("class", "region")
+  .attr("class", "town")
   .selectAll("path")
-  .data(topojson.object(map, map.objects.russia).geometries)
+  .data(topojson.object(town, town.objects.TWN_TOWN_v2).geometries)
   //.data(topojson.feature(map, map.objects.russia).features) <-- in case topojson.v1.js
   .enter().append("path")
   .attr("d", path)
   .style("fill", function(d) {
-    return color(rateById[d.properties.region]); 
+    return color(dataById[d.properties.Town_ID]); 
   })
   .style("opacity", 0.8)
 
@@ -72,7 +70,7 @@ function drawTaiwan(){
     d3.select(this).transition().duration(300).style("opacity", 1);
     div.transition().duration(300)
     .style("opacity", 1)
-    div.text(nameById[d.properties.region] + " : " + rateById[d.properties.region])
+    div.text(nameById[d.properties.Town_ID] + " : " + dataById[d.properties.Town_ID])
     .style("left", (d3.event.pageX) + "px")
     .style("top", (d3.event.pageY -30) + "px");
   })
@@ -86,23 +84,23 @@ function drawTaiwan(){
   
    // Adding cities on the map
 
-  d3.tsv("cities.tsv", function(error, data) {
-    var city = svg.selectAll("g.city")
-    .data(data)
-    .enter()
-    .append("g")
-    .attr("class", "city")
-    .attr("transform", function(d) { return "translate(" + projection([d.lon, d.lat]) + ")"; });
+  // d3.tsv("cities.tsv", function(error, data) {
+  //   var city = svg.selectAll("g.city")
+  //   .data(data)
+  //   .enter()
+  //   .append("g")
+  //   .attr("class", "city")
+  //   .attr("transform", function(d) { return "translate(" + projection([d.lon, d.lat]) + ")"; });
 
-    city.append("circle")
-    .attr("r", 3)
-    .style("fill", "lime")
-    .style("opacity", 0.75);
+  //   city.append("circle")
+  //   .attr("r", 3)
+  //   .style("fill", "lime")
+  //   .style("opacity", 0.75);
 
-    city.append("text")
-    .attr("x", 5)
-    .text(function(d) { return d.City; });
-  });
+  //   city.append("text")
+  //   .attr("x", 5)
+  //   .text(function(d) { return d.City; });
+  // });
   
   }; // <-- End of Choropleth drawing
  
