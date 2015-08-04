@@ -37,7 +37,7 @@ function drawTaiwan(){
 
   queue()
   .defer(d3.json, "TWN_TOWN_v2_topo3.json")
-  .defer(d3.csv, "flood.csv")
+  .defer(d3.csv, "flood2.csv")
   .await(ready);
 
   //Start of Choropleth drawing
@@ -84,23 +84,23 @@ function drawTaiwan(){
 
     // Adding cities on the map
 
-    // d3.tsv("cities.tsv", function(error, data) {
-    //   var city = svg.selectAll("g.city")
-    //   .data(data)
-    //   .enter()
-    //   .append("g")
-    //   .attr("class", "city")
-    //   .attr("transform", function(d) { return "translate(" + projection([d.lon, d.lat]) + ")"; });
+ /*   d3.tsv("cities.tsv", function(error, data) {
+      var city = svg.selectAll("g.city")
+      .data(data)
+      .enter()
+      .append("g")
+      .attr("class", "city")
+      .attr("transform", function(d) { return "translate(" + projection([d.lon, d.lat]) + ")"; });
 
-    //   city.append("circle")
-    //   .attr("r", 3)
-    //   .style("fill", "lime")
-    //   .style("opacity", 0.75);
+      city.append("circle")
+      .attr("r", 3)
+      .style("fill", "lime")
+      .style("opacity", 0.75);
 
-    //   city.append("text")
-    //   .attr("x", 5)
-    //   .text(function(d) { return d.City; });
-    // });
+      city.append("text")
+      .attr("x", 5)
+      .text(function(d) { return d.City; });
+    });*/
   
   }; // <-- End of Choropleth drawing
  
