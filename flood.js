@@ -61,7 +61,7 @@ function drawTaiwan(){
     .enter().append("path")
     .attr("d", path)
     .style("fill", function(d) {
-      return color(dataById[d.properties.id]); 
+      return color(dataById[d.geometries.id]); 
     })
     .style("opacity", 0.8)
 
@@ -70,7 +70,7 @@ function drawTaiwan(){
       d3.select(this).transition().duration(300).style("opacity", 1);
       div.transition().duration(300)
       .style("opacity", 1)
-      div.text(nameById[d.properties.id] + " : " + dataById[d.properties.id])
+      div.text(nameById[d.geometries.id] + " : " + dataById[d.geometries.id])
       .style("left", (d3.event.pageX) + "px")
       .style("top", (d3.event.pageY -30) + "px");
     })
