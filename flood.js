@@ -37,7 +37,7 @@ function drawTaiwan(){
 
   queue()
   .defer(d3.json, "TWN_TOWN_v2_topo3.json")
-  .defer(d3.csv, "flood3.csv")
+  .defer(d3.csv, "flood2.csv")
   .await(ready);
 
   //Start of Choropleth drawing
@@ -48,7 +48,7 @@ function drawTaiwan(){
 
     data.forEach(function(d) {
       dataById[d.Town_ID] = +d.flood;
-      nameById[d.Town_ID] = +d.T_Name;
+      nameById[d.Town_ID] = d.T_Name;
     });
 
     //Drawing Choropleth
