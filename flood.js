@@ -37,7 +37,7 @@ function drawTaiwan(){
 
   queue()
   .defer(d3.json, "TWN_TOWN_v2_topo3.json")
-  .defer(d3.csv, "flood2.csv")
+  .defer(d3.csv, "flood.csv")
   .await(ready);
 
   //Start of Choropleth drawing
