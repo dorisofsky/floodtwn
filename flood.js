@@ -11,7 +11,7 @@ function drawTaiwan(){
 
   var color_domain = [50, 150, 350, 750, 1500]
   var ext_color_domain = [0, 50, 150, 350, 750, 1500]
-  var legend_labels = ["< 50", "50+", "150+", "350+", "750+", "> 1500"]              
+  var legend_labels = ["< 0", "3+", "5+", "8+", "10+", "> 15"]              
 
   var color = d3.scale.threshold()
   .domain(color_domain)
