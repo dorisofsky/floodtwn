@@ -48,7 +48,7 @@ function drawTaiwan(){
 
     data.forEach(function(d) {
       dataById[d.Town_ID] = +d.flood;
-      nameById[d.Town_ID] = d.T_Name;
+      nameById[d.Town_ID] = +d.T_Name;
     });
 
     //Drawing Choropleth
